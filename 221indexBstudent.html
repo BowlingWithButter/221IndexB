@@ -1,0 +1,133 @@
+<!--
+221indexB.html demonstrates basic JavaScript and CSS
+Unpublished work (c)2013 Project Lead The Way
+CSE Activity 2.2.1 HTML5andJavaScript
+Version 12/19/2013 
+-->
+
+<html>
+<head>
+	<style = "text/css">
+		#img1popout {
+			z-index: 5;
+			position: absolute;
+			width: 550px;
+			height: 300px;
+			top: 50px;
+			border: 1px dashed #000099;
+			background-color: #ddddff;
+		}
+		#img1popin{}
+		
+	</style>
+	
+	<!-- import jquery library -->
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+	<!-- start jquery script -->
+	<script>
+
+	
+	 $(document).ready(function(){ // don't start this function until after the hmtl in the page loads
+	 
+		//  get the table body element so we can add stuff to its html
+		var tbody = document.getElementById("tablebody");
+		var inner = ''
+		
+		// fill in the for loop 
+		for (; ;) {
+		
+			// start a row if we are on pic1, pic6, pic11, etc.
+			if (i % 5 == 1) {
+				inner += '<tr>';
+			}
+			// add html for <td> here
+			inner += '<td>		</td>';
+			
+			// finish a row if we just did pic5, pic10, etc.
+			if (i % 5 == 0) {
+				inner += '</tr>';
+			}
+			
+			// check html results so far
+			console.log(inner);
+		}
+		
+		// finish row 
+		inner += '</tr>';
+	
+	// write html to the element 
+	tbody.innerHTML = inner;
+	initPopout();
+	});
+		var currentPic = ""
+		function initPopout()
+		{
+			/*demos= document.getElementsByClassName('pic');
+			for (var i = 0; i < demos.length; i++) {
+				demos[i].addEventListener('click',clicked);
+				demos[i].addEventListener("mouseover", showDetailedView);
+			}*/
+			
+			for (var i = 1; i < 5; i++) {
+				var pic = document.getElementById("image" + i + "a");
+				pic.addEventListener('click',clicked);
+				pic.addEventListener("mouseover", showDetailedView);
+			}
+		}
+		
+		function clicked() {
+			alert(this.id);
+		}
+
+		function showDetailedView(e)
+		{
+		console.log(e.target.id);
+			var x = e.target.id;
+			var divID = "image" + x.substring(5, 6) + "b";
+			//console.log(
+			var im1 = document.getElementById(divID);
+			currentPic = divID;
+			var picLoc = "aprilla/pic" + this.id.substring(5,6) + ".jpg";
+			console.log(x);
+			im1.id = "img1popout";
+			imgsrc = "aprilla/" + this.id + ".jpg";
+			im1.innerHTML = "<br /><TABLE><TR><TH rowspan='2'><img src=" + picLoc + "  width='250'><TH align='left'>Artist's Name: <TH align='left'>Aprill Aronie<TR><TH align='left'>First Name: <TH align='left'>" + x + "<TR></TABLE> ";
+			var popOut = document.getElementById("img1popout");
+			popOut.onmouseout = hideDetailedView;			
+		}
+
+		function hideDetailedView()
+		{
+		//alert(this.id)
+		console.log("Div ID = " + currentPic);
+			var im1 = document.getElementById("img1popout");
+			im1.id = currentPic;
+			im1.innerHTML = "";
+		}
+	</script>
+</head>
+<body>
+<br>
+
+<table>
+	<caption>Your Results:</caption>
+	<tbody id = "tablebody">
+
+	</tbody>
+</table>
+<br>
+Search the art database using the fields below.
+<form method="post" action="index1.html">
+	<pre>
+First Name
+<input type="text" name="firstname">
+<br>
+Last Name
+<input type="text" name="lastname">
+<br>
+<input type="submit" value="SEARCH">
+	</pre>
+</form>
+</body>
+
+</html>
